@@ -5,7 +5,7 @@ import (
 	"strconv"
 	"core"
 	"geometry"
-	"spacepartitionning"
+	"accelerators"
 //	"fmt"
 )
 
@@ -14,14 +14,14 @@ func ParseFile(s string) *core.Scene {
 	camera := ParseCamera(s)
 	world := ParseWorld(s)
 	primitives := ParsePrimitives(s)
-	lights := mapBool(geometry.IsLight,primitives)
+	lights := geometry.MapBool(geometry.IsLight,primitives)
 	
-	var tree spacepartitionning.Tree
+	var tree accelerators.Tree
 	
-	tree = &spacepartitionning.EmptyTree{}
+	tree = &accelerators.EmptyTree{}
 	
 	for _,v := range primitives {
-		tree = spacepartitionning.Insert(tree, v)
+		tree = accelerators.Insert(tree, v)
 	}
 	
 	

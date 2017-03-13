@@ -2,7 +2,7 @@ package core
 
 import (
 	. "geometry"
-	"spacepartitionning"
+	"accelerators"
 	"math"
 	mrand "math/rand"
 	"image"
@@ -21,11 +21,11 @@ type Scene struct {
 	world *World
 	prims []*Triangle
 	lights []*Triangle
-	tree spacepartitionning.Tree
+	tree accelerators.Tree
 	enveloppe *BoundingBox
 }
 
-func NewScene(sceneOpts *SceneOpts, camera *Camera, world *World, prims []*Triangle, lights []*Triangle, tree spacepartitionning.Tree, enveloppe *BoundingBox) *Scene {
+func NewScene(sceneOpts *SceneOpts, camera *Camera, world *World, prims []*Triangle, lights []*Triangle, tree accelerators.Tree, enveloppe *BoundingBox) *Scene {
 	return &Scene{sceneOpts, camera, world, prims, lights, tree, enveloppe}
 }
 
@@ -197,7 +197,7 @@ func (scene *Scene) intersection(pos *Point3, dir *Vector3, lastHit *Triangle, h
 	sceneIntersection := RayIntersectsPrimitive(ray, scene.enveloppe)
 	if IsHit(sceneIntersection) {
 		rayBBox := NewBBoxFromIntersection(pos, dir, sceneIntersection)
-		intersections := spacepartitionning.Intersect(scene.tree, rayBBox, ray, lastHit)
+		intersections := accelerators.Intersect(scene.tree, rayBBox, ray, lastHit)
 //		fmt.Printf("Intersections size : %d\n",len(intersections))
 		intersection := MinIntersections(intersections)
 //		fmt.Printf("adresse : %p\n",dir)

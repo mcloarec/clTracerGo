@@ -1,4 +1,4 @@
-package spacepartitionning
+package accelerators
 
 import (
 	"geometry"

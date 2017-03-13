@@ -22,13 +22,13 @@ func (pSp *SurfacePoint) HitPosition() *Point3 {
 	return pSp.pHitPosition
 }
 
-func (pSp *SurfacePoint) SurfacePointEmission(pPos *Point3, pDir *Vector3, isSolidAngle bool) *Color {
+func (pSp *SurfacePoint) SurfacePointEmission(pToPos *Point3, pOutDir *Vector3, isSolidAngle bool) *Color {
 	var solidAngle float64
-	ray := NewVectorFromPoints(*pSp.pHitPosition,*pPos)
+	ray := NewVectorFromPoints(*pSp.pHitPosition,*pToPos)
 	distance2 := ray.DotProduct(*ray)
 	distance2 = math.Max(distance2, 1e-6)
 	normal := pSp.pTriangle.normal
-	cosout := pDir.DotProduct(normal)
+	cosout := pOutDir.DotProduct(normal)
 	cosArea := cosout * pSp.pTriangle.Area()
 	/* Emit from front face of surface only with infinity clamped out*/
 	solidAngle = map[bool]float64{true:(cosArea/distance2),false:1.0}[isSolidAngle]
@@ -78,7 +78,7 @@ func (pSp *SurfacePoint) SurfacePointNextDirection(pInDirection *Vector3, pOutDi
 	}
 	
 	/* discluding degenerate result direction */
-	return isAlive && ((*pOutDirection).length() > 0.0)
+	return isAlive && (!IsNillVector(**pOutDirection))
 }
 
 func (pSp *SurfacePoint) SurfacePointReflection(pInDirection *Vector3, pInRadiance *Color, pOutDirection *Vector3) *Color {
