@@ -1,6 +1,11 @@
-image: gitpod/workspace-go
+image: gitpod/workspace-full-vnc
 
 vscode:
   extensions:
     - eamodio.gitlens
     - golang.go
+
+ports:
+  - name: VNC
+    port: 6080
+    onOpen: open-browser
