@@ -1,6 +1,6 @@
-image: gitpod/workspace-full
+image: gitpod/workspace-go
 
 vscode:
   extensions:
-    - "eamodio.gitlens"
-    
+    - eamodio.gitlens
+    - golang.go
