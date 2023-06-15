@@ -1,5 +1,7 @@
-image: gitpod/workspace-full-vnc
-
+#image: gitpod/workspace-full-vnc
+image:
+  file: .gitpod.Dockerfile
+  
 vscode:
   extensions:
     - eamodio.gitlens
